@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import net.guides.springboot.registrationlogindemo.dto.UserDto;
 import net.guides.springboot.registrationlogindemo.entity.User;
 import net.guides.springboot.registrationlogindemo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import java.util.List;
 @Controller
 public class AuthController {
 
+    @Autowired
     private UserService userService;
 
     @GetMapping("/index")
@@ -47,7 +49,7 @@ public class AuthController {
     BindingResult result, Model model) {
         User existingUser = userService.findUserByEmail(userDto.getEmail());
 
-        if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
+        if (existingUser != null){
             result.rejectValue("email", "null",
                     "There is already an account registered with the same email");
         }
